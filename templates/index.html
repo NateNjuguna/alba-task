@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Alba One Task</title>
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/assets/css/datepicker.min.css" rel="stylesheet" />
+        <link href="/assets/css/intl-tel-input.css" rel="stylesheet" />
+        <link href="/assets/css/alba-one.css" rel="stylesheet" />
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header navbar-right">
+                    <form action="/search" class="navbar-form" method="GET">
+                        <div class="input-group">
+                            <input type="search" class="form-control" name="query" placeholder="Search..." value="{{ keyword }}" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span> GO!</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-4 text-center">
+                    {% if errors|length > 0 %}
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="">
+                            {% for error in errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-xs-4 col-md-2 col-md-offset-2 text-center">
+                    <button class="btn btn-primary" data-target="#addNewRecordModal" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Add</button>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Phone Number</th>
+                        <th>Username</th>
+                    </thead>
+                    <tbody>
+                        {% for entry in entries %}
+                        <tr>
+                            <td>{{ entry[0] }}</td>
+                            <td>{{ entry[1] }}</td>
+                            <td>{{ entry[2] }}</td>
+                            <td>{{ entry[3] }}</td>
+                            <td>{{ entry[4] }}</td>
+                            <td>{{ entry[5] }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6">
+                                <div class="alert alert-info text-center" role="alert">
+                                    No Entries found
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade" id="addNewRecordModal" role="dialog" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <form action="/" class="modal-content" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add a new entry</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" maxlength="32" minlength="4" name="username" placeholder="Username (4-32 characters)" required />
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label for="latitude">Latitude</label>
+                                    <input type="number" class="form-control" id="latitude" max="90" min="-90" name="latitude" placeholder="Latitude" required step=".00000000001" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="longitude">Longitude</label>
+                                    <input type="text" class="form-control" id="longitude" max="90" min="-90" name="longitude" placeholder="Longitude" required step=".00000000001"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="datePickerFormGroup">
+                            <label for="date">Date</label>
+                            <input type="text" class="datepicker form-control" id="date" name="date" placeholder="Date" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" maxlength="512" name="description" placeholder="A short description" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/assets/js/jquery.min.js" type="text/javascript"></script>
+        <script src="/assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/assets/js/datepicker.min.js" type="text/javascript"></script>
+        <script src="/assets/js/intl-tel-input.min.js" type="text/javascript"></script>
+        <script src="/assets/js/alba-one.js" type="text/javascript"></script>
+    </body>
+</html>
